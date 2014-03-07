@@ -1,0 +1,274 @@
+\documentclass [a4paper]{article}
+
+%\usepackage[latin1]{inputenc}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage[french]{babel}
+%\usepackage[francais]{babel}
+\usepackage{rotating}
+\usepackage {color}
+\usepackage {latexsym}
+\usepackage {graphicx, epsfig}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{supertabular}
+\usepackage{lscape}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{color}
+\usepackage{colortbl}
+
+%\addtolength{\textwidth}{1.5cm}
+%\addtolength{\oddsidemargin}{-2.7cm}
+%\addtolength{\topmargin}{-3.5cm}
+%\addtolength{\botmargin}{1cm}
+%\textwidth = 500pt
+%\textheight=730pt \empty
+
+\usepackage{geometry}
+\geometry{a4paper, top=1.3cm, bottom=1.8cm, left=1.5cm, right=1.5cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% A mathematical environment in a small font as well
+
+%\newcommand{\bea}{\begin{small}\begin{eqnarray}}
+%\newcommand{\eea}{\end{eqnarray}\end{small}}
+
+%\newcommand{\be}{\begin{small}\begin{equation}}
+%\newcommand{\ee}{\end{equation}\end{small}}
+
+\newcommand{\nn}{\nonumber \\}
+
+%%% More useful stuff 
+
+\newcommand{\bc}{\begin{center}}
+\newcommand{\ec}{\end{center}}
+
+\newcommand{\bt}{\begin{tabular}}
+\newcommand{\et}{\end{center}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+
+\noindent UFR de Physique et Ing\'enierie \hfill Universit\'e de Strasbourg
+
+\bc
+ LICENCE 3 DE PHYSIQUE --- ANN\'EE 2013/2014 \\
+ 
+ \textbf{CALCUL SCIENTIFIQUE}\\
+ 
+ \textbf{RAPPELS DES COMMANDES GNUPLOT} \\
+\ec
+ 
+ 
+\noindent\begin{tabular}{p{17.2cm}}
+ \hline
+ \\
+\end{tabular}
+
+
+\section{Utilisation du logiciel}
+
+Pour utiliser  en invite commande, tapez simplement \verb?? dans un terminal. L'invite de commande  s'ouvre alors. Pour quitter le logiciel, utilisez les commandes \verb?quit? ou \verb?exit?. Pour obtenir de l'aide, vous pouvez taper \verb?help? suivi d'une commande.
+
+\section{Tracer une fonction}
+
+\noindent
+Pour une fonction simple :
+\begin{verbatim}
+  plot sin(x)
+\end{verbatim}
+
+\noindent
+Pour une fonction contenant des paramètres, on commence par définir les paramètres puis la fonction à tracer :
+\begin{verbatim}
+  plot a=3, sin(x*a)
+\end{verbatim}
+
+\noindent
+Pour tracer une fonction en mode paramétrique, par exemple un cercle :
+\begin{verbatim}
+  # Pour passer en mode parametrique
+  set parametric
+  # Pour tracer la fonction
+  plot cos(t), sin(t)
+  # Pour désactiver le mode parametrique
+  set parametric
+\end{verbatim}
+
+\noindent
+Pour tracer une fonction en mode polaire, par exemple une spirale :
+\begin{verbatim}
+  # Pour passer en mode polaire
+  set polar
+  # Pour tracer la fonction
+  plot t
+  # Pour désactiver le mode polaire
+  set nopolar
+\end{verbatim}
+
+\section{Tracer à partir d'un fichier de données}
+
+\noindent
+Gnuplot est capable de lire des données à partir de fichier formatés en colonnes, de la façon suivante :
+
+\begin{center}
+    \verb?example.dat?\\
+\begin{tabular}{|l|}
+    \hline
+    \verb?# Ceci est un commentaire?\\
+    \verb?# var1   var2   var3?\\
+    \verb?  0.0    2.1    5.36?\\
+    \verb?  0.1    2.6    5.77?\\
+    \verb?  0.2    2.9    5.96?\\
+    \verb?  0.3    2.7    6.84?\\
+    \verb?# Ceci est un autre commentaire?\\
+    \verb?  0.4    2.2    7.13?\\
+    \verb?  0.5    1.9    7.32?\\
+    \hline
+\end{tabular}
+\end{center}
+
+\noindent
+Pour tracer ces données, il suffit de taper, par exemple la deuxième colonne en abscisse et la troisième colonne en ordonnée :
+
+\begin{verbatim}
+  plot "example.dat" using 2:3
+\end{verbatim}
+
+\section{Modifier l'apparence des graphiques}
+
+\subsection{Intervalle de représentation}
+
+\noindent
+Pour spécifier l'intervalle de représentation (par exemple $[0, 2\pi]$ en abscisse et $[-1,1]$ en ordonnée) :
+\begin{verbatim}
+  set xrange [0:2*pi]
+  set yrange [-1:1]
+  plot sin(x)
+\end{verbatim}
+
+\subsection{Type de tracés}
+
+\noindent
+Le type de tracé à réaliser peut être modifié au sein de la commande \verb?plot?. Par exemple, pour tracer des lignes au lieu de points :
+
+\begin{verbatim}
+  plot sin(x) with lines
+\end{verbatim}
+
+\noindent
+Les types de tracés les plus courants sont :\\
+
+\begin{tabular}{l|l}
+    \verb?points?      & Pour utiliser uniquement des croix\\
+    \verb?lines?       & Pour tracer des lignes qui relient les points\\
+    \verb?linespoints? & Pour tracer à la fois les lignes et les croix\\
+    \verb?dots?        & Pour tracer uniquement des petits points\\
+    \verb?steps?       & Pour tracer des histogrammes\\
+    \verb?boxes?       & Pour tracer des boîtes\\
+\end{tabular}
+
+\subsection{Couleur des tracés}
+
+\noindent
+De la même façon, la couleur des tracés peut être modifié dans la commande \verb?plot? via des codes couleurs. Par exemple, pour tracer en bleu, on fera :
+
+\begin{verbatim}
+  plot sin(x) linecolor 3
+\end{verbatim}
+
+\noindent
+Les codes couleur sont les suivants :\\
+
+\begin{tabular}{l|l}
+    1 & Rouge\\
+    2 & Vert \\
+    3 & Bleu\\
+    4 & Violet\\
+    5 & Cyan\\
+    6 & Marron\\
+    7 & Orange clair \\
+    8 & Orange foncé \\
+\end{tabular}
+
+\subsection{Légende}
+
+\noindent
+Il est possible de définir le titre du graphique et des axes via les commandes suivantes :
+
+\begin{verbatim}
+  set title "The title"
+  set xlabel "The X axis"
+  set ylabel "The Y axis""
+  plot sin(x)
+\end{verbatim}
+
+\subsection{Superposition de tracés}
+
+\noindent
+Pour superposer des tracés, on peut soit lister tous les tracés dans la commande \verb?plot? :
+
+\begin{verbatim}
+  plot sin(x), "example.dat" using 2:3
+\end{verbatim}
+
+\noindent
+Soit utiliser la commande \verb?replot? :
+
+\begin{verbatim}
+  plot sin(x)
+  replot "example.dat" using 2:3
+\end{verbatim}
+
+\section{Utilisation de fichiers de commande}
+
+Pour éviter d'avoir à retaper de nombreuses fois les mêmes commandes, il peut être judicieux d'utiliser des fichiers contenant déjà l'ensemble des commandes que l'on veut exécuter. On peut ensuite charger ce fichier directement au lancement de gnuplot en tapant \verb?gnuplot commands.gnu? ou bien depuis l'invite de commande en tapant \verb?load commands.gnu?. Il peut devenir utile d'ajouter la commande \verb?pause -1? dans le fichier de commande pour avoir le temps de regarder les graphiques.\\
+
+Enfin, il est même possible de lancer l'exécution de gnuplot depuis un programme C via l'instruction \verb?system()? si vous incluez le fichier \verb?stdlib.h? :
+
+\begin{verbatim}
+  #include <stdlib.h>
+  ...
+
+  int main()
+  {
+      ...
+      system("gnuplot commands.gnu");
+      ...
+  }
+\end{verbatim}
+
+\section{Exporter des tracés en fichiers latex ou png}
+
+\noindent
+Il est possible d'exporter vos graphiques directement en fichiers \verb?.tex? ou \verb?.png? de la façon suivante :
+
+\begin{verbatim}
+  plot sin(x)
+
+  # Pour un export en fichier tex
+  set terminal latex
+  set output "myPlot.tex"
+  replot
+  set terminal x11
+
+  # Pour un export en fichier png
+  set terminal png
+  set output "myPlot.png"
+  replot
+  set terminal x11
+\end{verbatim}
+
+
+
+
+\end{document}
+
+
+
+
+
